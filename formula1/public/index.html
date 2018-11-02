@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Formula 1 Standings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="../stylesheets/main.css">
+        <link rel="stylesheet" type="text/css" href="../stylesheets/util.css">
+        <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!--API Key = AIzaSyBUQtme14MjWZSbMMIW9Y--MU7B-S-YxfM-->
+    </head>
+  
+    
+    <body>
+        <form style="padding-bottom: 50px; padding-top: 50px; color: white" text-align: "center">
+            <h1>Enter a Season:</h1><br>
+            <input width="100%" type="text" id="season" placeholder="(1950-2018)" value=""><br>
+            <button id="seasonButton">Standings</button>
+            <button id="podiumButton">Podium</button>
+        </form> 
+        
+        <div class="limiter" style="padding-top: 100px">
+		<div class="container-table100">
+        <div class="table100 ver1 m-b-110 hello">
+            <table align="center" data-vertable="ver1">
+                <div id="podium">
+            </div>
+		</div>
+
+        <div class="limiter">
+		<div class="container-table100">
+		<div class="table100 ver1 m-b-110 hello">
+			<table align="center" data-vertable="ver1">
+				<div id="standingsList">
+				    
+			</div>
+		</div>
+		
+	
+					
+						        
+          
+    </body>
+    
+    <script>
+        $("#seasonButton").click(function(event) {
+            event.preventDefault();
+            var season = $("#season").val();
+            console.log(season);
+            var myurl = "standings?q=" + season;
+            console.log(myurl);
+            $.ajax({
+                url : myurl,
+                dataType: "json",
+                success: function(data) {
+                    console.log(data);
+                    var everything;
+                        everything += '<thead>'
+                        everything += '<tr class="row100 head"><th class="column100 column2" data-column="column2">' + "Position" + '</th><th class="column100 column1" data-column="column1">' + "Name" + '</th><th class="column100 column3" data-column="column3">' + "Constructor" + '</th><th class="column100 column4" data-column="column4">' + "Points" + '</th></tr>';
+                        everything += '</thead>'
+                        everything += '<tbody>'
+                        var total = 0
+                        if(data.MRData.total > 30) {
+                            total = 30;
+                        }
+                        else total = data.MRData.total;
+                        for (var i = 0; i < total; i++) {
+                            var position = (i + 1);
+                            var name = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[i].Driver.givenName + " " + data.MRData.StandingsTable.StandingsLists[0].DriverStandings[i].Driver.familyName;
+                            var constructor = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[i].Constructors[0].name;
+                            var points = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[i].points;
+                            everything += '<tr class="row100"><td class="column100 column2">' + position + '</td><td class="column100 column1">' + name + '</td><td class="column100 column3">' + constructor + '</td><td class="column100 column4">' + points + '</td></tr>';
+                        }
+                    everything += '</tbody></table></div>'
+                    $("#standingsList").html(everything);
+                    
+                    
+                }
+                
+            });
+        });
+
+    </script>
+    
+    <script>
+        $("#podiumButton").click(function(event) {
+                    event.preventDefault();
+                    var season = $("#season").val();
+                    console.log(season);
+                    var myurl = "podium?q=" + season;
+                    console.log(myurl);
+                    $.ajax({
+                        url: myurl,
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            var firstplaceName = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].Driver.givenName + " " + data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].Driver.familyName;
+                            var constructor1 = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].Constructors[0].name;
+                            var constructor2 = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[1].Constructors[0].name;
+                            var constructor3 = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[2].Constructors[0].name;
+                            var secondplaceName = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[1].Driver.givenName + " " + data.MRData.StandingsTable.StandingsLists[0].DriverStandings[1].Driver.familyName;
+                            var thirdplaceName = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[2].Driver.givenName + " " + data.MRData.StandingsTable.StandingsLists[0].DriverStandings[2].Driver.familyName;
+                            var firstplacePoints = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[0].points;
+                            var secondplacePoints = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[1].points;
+                            var thirdplacePoints = data.MRData.StandingsTable.StandingsLists[0].DriverStandings[2].points;
+                        
+                            var everything;
+                            everything += '<thead><tr class="row100 head"><th class="column100 column1" data-column="column1">' + "Name" + '</th><th class="column100 column1" data-column="column1">' + "Constructor" + '</th><th class="column100 column2" data-column="column3">' + "Points" + '</th></tr></thead>';
+                            everything += '<tbody><tr class="row100"><td class="column100 column1">' + firstplaceName + '</td><td class="column100 column1">' + constructor1 + '</td><td class="column100 column3">' + firstplacePoints + '</td></tr>';
+                            everything += '<tbody><tr class="row100"><td class="column100 column1">' + secondplaceName + '</td><td class="column100 column1">' + constructor2 + '</td><td class="column100 column3">' + secondplacePoints + '</td></tr>';
+                            everything += '<tbody><tr class="row100"><td class="column100 column1">' + thirdplaceName + '</td><td class="column100 column1">' + constructor3 + '</td><td class="column100 column3">' + thirdplacePoints + '</td></tr>';
+                            everything += '</tbody>';
+                                    
+                            $("#podium").html(everything);
+                            
+                            
+    
+                                }
+    
+                            });
+                    });
+    </script>
+    
+</html>

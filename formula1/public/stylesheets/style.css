@@ -1,0 +1,50 @@
+
+body {
+    
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    /*padding-top: 50px;*/
+    text-align: center;
+    background-color: white;
+}
+
+form {
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  background-color:#36304a;
+}
+
+
+
+input {
+    display: inline-block;
+    width: 40%;
+    border: 1px solid rgba(255,255,255,0.6);
+    transition: all 0.3s ease-out;
+    box-shadow: 
+        inset 0 1px 4px rgba(0,0,0,0.4);
+    padding: 5px;
+    box-sizing: border-box;
+    color: block;
+    font-size: 20px;
+    margin-bottom: 20px;
+	text-align: center; 
+	font-family:customfont;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#seasonButton {
+  padding: 5px;
+}
+
+#podiumButton {
+  padding: 5px;
+}
+
